@@ -1,0 +1,85 @@
+@import '../../node_modules/bootstrap/scss/bootstrap';
+@import '../../node_modules/bootstrap/scss/bootstrap-grid';
+@import '../../node_modules/bootstrap/scss/bootstrap-reboot';
+@import 'vars';
+
+body{
+  background-color: $layout-white;
+}
+
+.app-wrapper{
+  background-color: $layout-white;
+  color: $layout-contrast-black;
+  height: 100vh;
+  
+  .row > section {
+    padding: 50px 50px;
+    
+    &.app-list{
+
+      .row > .customer-header{
+        margin-bottom: 50px;
+        color: $layout-base;
+        
+        i.fas{
+          font-size: 2.5 rem;
+          margin-right: 10px;
+        } 
+      }
+      
+    }
+
+    &.app-actions{
+      background-color: $layout-base;
+      color: $layout-white;
+      height: 100vh;
+      
+      .btn-actions {
+        display: flex;
+        -webkit-justify-content: center;
+                justify-content: center;
+        
+        .btn {
+          color: white;
+          -webkit-flex-grow: 1;
+                flex-grow: 1;
+          margin: 0 5px;
+        }
+        
+        .btn-add {
+          background-color: $denotive-green;
+        }
+        .btn-update {
+          background-color: $denotive-orange;
+        }
+        .btn-delete {
+          background-color: $denotive-red;
+        }        
+      }
+
+      .action-message{
+        margin: 10px 5px;
+        padding: 10px 10px 10px 20px;
+        background-color: $base-lighten-2;
+      }
+
+      form{
+        input {
+          margin-top: 30px;
+          background-color: $layout-base;
+          border: none;
+          -webkit-border-radius: 0;
+                  border-radius: 0;
+          border-bottom: 1px solid white;
+          color: white;
+          
+          &::-webkit-input-placeholder {
+            color: $layout-white;
+          }
+        }
+      }
+    }
+  }
+
+
+}

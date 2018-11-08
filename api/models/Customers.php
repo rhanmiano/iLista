@@ -1,0 +1,128 @@
+<?php
+require_once '/../connection.php';
+require '/../includes/global_vars.php';
+
+class Customers extends Model {
+  
+}
+
+class CustomersModel extends Model{
+  protected $data;
+
+  public function __construct(){
+    $this->data = new ReturnObj();
+  }
+
+  public function getAllCustomers(){
+    $data = $this->data->returnObj();
+
+    $customers = Model::factory('Customers')
+      ->find_array();
+
+    if(!empty($customers)){
+      $data->status    = "success";
+      $data->customers = $customers;
+      $data->message   = "Fetched data successfully";
+    } else {
+      $data->status    = "failed";
+      $data->customers = null;
+      $data->message   = "Nothing to be fetched";
+    }
+
+    return $data;
+  }
+
+  public function getCustomerById($id){
+    $data = $this->data->returnObj();
+
+    $customer = Model::factory('Customers')
+      ->where('id', $id)
+      ->find_array();
+
+    if(!empty($customer)){
+      $data->status   = "success";
+      $data->customer = $customer;
+      $data->message  = "Fetched data successfully";
+    } else {
+      $data->status   = "failed";
+      $data->customer = $customer;
+      $data->message  = "Nothing to be fetched";
+    }
+
+    return $data;
+  }
+
+  public function insertCustomer($args){
+    $data = $this->data->returnObj();
+
+    $customer = Model::factory('Customers')
+      ->create();
+
+    if(!empty($args->name) && !empty($args->password) && !empty($args->email) && !empty($args->age) ) {
+      $customer->name     = $args->name;
+      $customer->password = md5($args->password);
+      $customer->email    = $args->email;
+      $customer->age      = $args->age;
+
+      if($customer->save()){
+        $data->status  = "success";
+        $data->data    = null;
+        $data->message = "Customer added successfully";
+      }
+    } else {
+      $data->status  = "failed";
+      $data->data    = null;
+      $data->message = "Required fields must not be empty";
+    }
+
+    return $data;
+  }
+
+  public function updateCustomerById($id, $args){
+    $data = $this->data->returnObj();
+
+    $customer = Model::factory('Customers')
+      ->find_one($id);
+    $customer->set_expr('updated_at', 'now()');
+
+    $customer_data = Model::factory('Customers')
+      ->where('id', $id)
+      ->find_array();
+
+    // Columns to be updated
+    $columns = array_keys(array_intersect_key($customer_data[0], (array)$args));
+    foreach($columns as $column){
+      $customer->$column = $args->$column;
+    }
+
+    if($customer->save()){
+      $data->status          = "success";
+      $data->columns_updated = $columns;
+      $data->message         = "Customer updated successfully";
+    } else {
+      $data->status  = "failed";
+      $data->data    = null;
+      $data->message = "Cannot do update due to some error";
+    }
+    return $data;
+  }
+
+  public function deleteCustomerById($id){
+    $data = $this->data->returnObj();
+
+    $customer = Model::factory('Customers')
+      ->find_one($id);
+
+    if($customer->delete()){
+      $data->status  = "success";
+      $data->data    = null;
+      $data->message = "Customer deleted successfully";
+    } else {
+      $data->status  = "failed";
+      $data->data    = null;
+      $data->message = "Cannot do delete due to some error";
+    }
+
+    return $data;
+  }
+}
