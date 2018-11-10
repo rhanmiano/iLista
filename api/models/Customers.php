@@ -58,9 +58,8 @@ class CustomersModel extends Model{
     $customer = Model::factory('Customers')
       ->create();
 
-    if(!empty($args->name) && !empty($args->password) && !empty($args->email) && !empty($args->age) ) {
+    if(!empty($args->name) && !empty($args->email) && !empty($args->age)) {
       $customer->name     = $args->name;
-      $customer->password = md5($args->password);
       $customer->email    = $args->email;
       $customer->age      = $args->age;
 
@@ -82,22 +81,26 @@ class CustomersModel extends Model{
     $data = $this->data->returnObj();
 
     $customer = Model::factory('Customers')
-      ->find_one($id);
-    $customer->set_expr('updated_at', 'now()');
+      ->find_one($id);    
 
     $customer_data = Model::factory('Customers')
       ->where('id', $id)
       ->find_array();
 
     // Columns to be updated
-    $columns = array_keys(array_intersect_key($customer_data[0], (array)$args));
+    $columns = array_keys($customer_data[0]);
+    $updated_columns = [];
     foreach($columns as $column){
-      $customer->$column = $args->$column;
+      if($customer->$column != $args->$column) {        
+        $customer->$column = $args->$column;
+        array_push($updated_columns, $column);
+      }      
     }
-
+    
+    $customer->set_expr('updated_at', 'now()');
     if($customer->save()){
       $data->status          = "success";
-      $data->columns_updated = $columns;
+      $data->columns_updated = $updated_columns;
       $data->message         = "Customer updated successfully";
     } else {
       $data->status  = "failed";

@@ -10411,6 +10411,7 @@ template {
 
 body {
   background-color: #EEEEEE;
+  overflow: hidden;
 }
 
 .app-wrapper {
@@ -10464,10 +10465,22 @@ body {
   background-color: #FF6565;
 }
 
-.app-wrapper .row > section.app-actions .action-message {
+.app-wrapper .row > section.app-actions .message {
   margin: 10px 5px;
   padding: 10px 10px 10px 20px;
+  border-radius: 2px;
+}
+
+.app-wrapper .row > section.app-actions .message-default {
   background-color: #2EBCD2;
+}
+
+.app-wrapper .row > section.app-actions .message-success {
+  background-color: #2ed2a6;
+}
+
+.app-wrapper .row > section.app-actions .message-failed {
+  background-color: #d05454;
 }
 
 .app-wrapper .row > section.app-actions form input {
@@ -10482,4 +10495,34 @@ body {
 
 .app-wrapper .row > section.app-actions form input::-webkit-input-placeholder {
   color: #EEEEEE;
+}
+
+.app-wrapper .table-fixed {
+  width: 100%;
+}
+
+.app-wrapper .table-fixed tbody {
+  max-height: 750px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.app-wrapper .table-fixed thead, .app-wrapper .table-fixed tbody, .app-wrapper .table-fixed tr, .app-wrapper .table-fixed td, .app-wrapper .table-fixed th {
+  display: flow-root;
+}
+
+.app-wrapper .table-fixed tbody td {
+  float: left;
+}
+
+.app-wrapper .table-fixed thead tr th {
+  float: left;
+}
+
+.is-clickable {
+  cursor: pointer;
+}
+
+.is-clickable:hover {
+  background-color: gainsboro;
 }

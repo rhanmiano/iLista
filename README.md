@@ -7,17 +7,17 @@ iLista is a basic Customer Listing App where user can add, update, delete, and r
   2. Study http calls using AngularJS  
   3. Learn the zigzags of MVC frameworks
   4. Enhance basic frontend theming
-  5. Get back to UI/UX designing
+  5. Practice, and more practice
 
 ## Design Mockup Demo
 Design is created using AdobeXD and is viewable [here](https://xd.adobe.com/view/7e0c702b-7d6b-4958-4cc4-5735f5b12e9d-083d/)
 
 ## Endpoints
-  - GET   /api/customers
-  - GET   /api/customer/{id}
-  - POST  /api/add/customer
-  - PUT /api/update/customer/{id}
-  - DELETE  /api/delete/customer/{id}
+  - GET       /api/customers              
+  - GET       /api/customer/{id}
+  - POST      /api/add/customer
+  - PUT       /api/update/customer/{id}
+  - DELETE    /api/delete/customer/{id}
 
 ## Todo
 ### Documentation
@@ -34,7 +34,7 @@ Design is created using AdobeXD and is viewable [here](https://xd.adobe.com/view
   - [X] Delete a specific customer
 #### Frontend
   - [X] Add function
-  - [ ] Update function
+  - [X] Update function
   - [ ] Delete function
   - [ ] Search function
 #### Other Checklist

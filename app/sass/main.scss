@@ -5,6 +5,7 @@
 
 body{
   background-color: $layout-white;
+  overflow: hidden;
 }
 
 .app-wrapper{
@@ -57,10 +58,22 @@ body{
         }        
       }
 
-      .action-message{
+      .message{
         margin: 10px 5px;
         padding: 10px 10px 10px 20px;
+        border-radius: 2px;        
+      }
+      
+      .message-default{
         background-color: $base-lighten-2;
+      }
+
+      .message-success{
+        background-color: $message-success;
+      }
+
+      .message-failed{
+        background-color: $message-failed;
       }
 
       form{
@@ -81,5 +94,40 @@ body{
     }
   }
 
+  .table-fixed{
+    width: 100%;
+    
+    tbody{
+      max-height: 750px;
+      overflow-y:auto;
+      width: 100%;
+    }
 
+    thead,tbody,tr,td,th{
+      display: flow-root;
+    }
+
+    tbody{
+      td{
+        float: left;
+      }
+    }
+    thead {
+      tr{
+        th{
+          float:left;
+        }
+      }
+    } 
+    
+  }
+}
+
+// Helpers
+.is-clickable {
+  cursor: pointer;
+  
+  &:hover {
+    background-color: gainsboro;
+  }
 }

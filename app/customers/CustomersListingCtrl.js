@@ -11,7 +11,12 @@
         update: false,
         delete: false
       };
-      $scope.message = "Choose an action";
+
+      $scope.message = {
+        status: "default",
+        caption: "Choose an action"
+      };
+
       $scope.getCustomers = function(){
         $scope.customers = [];
         CustomerListingSrvc.customersAllGet()
@@ -19,48 +24,88 @@
           var customers = response.data.customers;        
           angular.forEach(customers, function(value, key){
             $scope.customers.push(value);
-          })
+
+          });
         });
       };      
 
       $scope.addCustomer = function(){
-        $scope.message        = "Add a customer";
+        $scope.message.caption        = "Add a customer";
         $scope.actions.add    = true;
         $scope.actions.update = false;
         $scope.actions.delete = false;
+
+        angular.forEach($scope.customers, function(value, key) {
+          value.clickable = false;
+        });
       };
 
       $scope.updateCustomer = function(){
-        $scope.message        = "Update a customer";
+        $scope.message.caption        = "Update a customer";
         $scope.actions.update = true;
         $scope.actions.add    = false;
         $scope.actions.delete = false;
+
+        angular.forEach($scope.customers, function(value, key) {
+          value.clickable = true;
+        });
       };
 
       $scope.deleteCustomer = function(){
-        $scope.message        = "Delete a customer";
-        $scope.actions.delete = true;
-        $scope.actions.add    = false;
-        $scope.actions.update = false;
+        $scope.message.caption = "Delete a customer";
+        $scope.actions.delete  = true;
+        $scope.actions.add     = false;
+        $scope.actions.update  = false;
+
+        angular.forEach($scope.customers, function(value, key) {
+          value.clickable = false;
+        });
       };
 
-      $scope.saveAddCustomer = function(customer){
+      $scope.displayCustomer = function(customer){
+        $scope.selectedCustomer = {};
+        if($scope.actions.update){
+          $scope.selectedCustomer = angular.copy(customer);
+        }
+      }
+
+      $scope.submitAddCustomer = function(customer){
         var data = angular.toJson(customer);
-        console.log(data);
         CustomerListingSrvc.customerAdd(data)
-        .then(function(response){
+        .then(function (response){
           var data = response.data;
-          if(data.status == 'success') {            
-            $scope.message = data.message;
+          if(data.status == 'success') {
+            $scope.message.status = 'success';        
+            $scope.message.caption = data.message;
             $scope.customer = {};
             $scope.customers.push(customer);
-          } else if (response.data.status == 'failed'){
-            $scope.message = data.message;
+          } else if (data.status == 'failed'){
+            $scope.message.status = 'failed';
+            $scope.message.caption = data.message;
             $scope.customer = {};
           }          
         });
       };
 
+      $scope.submitUpdateCustomer = function(customer){
+        if(customer) {
+          var data = angular.toJson(customer);
+          CustomerListingSrvc.customerUpdate(customer.id, data)
+          .then(function (response){
+            var data = response.data;
+
+            if(data.status == 'success') {
+              $scope.message.status = 'success';
+              $scope.message.caption = data.message;
+
+              $scope.getCustomers();
+            } else if (data.status == 'failed'){
+              $scope.message.status = 'failed';
+              $scope.message.caption = data.message;
+            } 
+          });
+        }        
+      };
       $scope.getCustomers();
     }]);   
 
@@ -79,6 +124,16 @@
           return $http({
             method: 'POST',
             url: '/api/add/customer',
+            data: data,
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          });
+        },
+        'customerUpdate': function(id, data){
+          return $http({
+            method: 'PUT',
+            url: `/api/update/customer/${id}`,
             data: data,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'

@@ -16,21 +16,21 @@
               <h1><i class="fas fa-user-circle fas-fw"></i>Customers</h1> 
             </div>
             <div class="col-md-12">    
-              <table class="table table-condensed">
+              <table class="table table-fixed">
               <thead>
                 <tr>
-                  <th></th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Age</th>
+                  <th class="col-md-1">ID</th>
+                  <th class="col-md-4">Name</th>
+                  <th class="col-md-5">Email</th>
+                  <th class="col-md-2">Age</th>
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="customer in customers">
-                  <td ng-bind="$index + 1"></td>
-                  <td ng-bind="customer.name"></td>
-                  <td ng-bind="customer.email"></td>
-                  <td ng-bind="customer.age"></td>
+                <tr ng-repeat="customer in customers" ng-class="{'is-clickable': customer.clickable}" ng-click="displayCustomer(customer)">
+                  <td ng-bind="$index + 1" class="col-md-1"></td>
+                  <td ng-bind="customer.name" class="col-md-4"></td>
+                  <td ng-bind="customer.email" class="col-md-5"></td>
+                  <td ng-bind="customer.age" class="col-md-2"></td>
                 </tr>
             </table>
             </div>
@@ -43,24 +43,23 @@
             <button class="btn btn-update btn-lg shadow-sm" ng-click="updateCustomer()">UPDATE</button>
             <button class="btn btn-delete btn-lg shadow-sm" ng-click="deleteCustomer()">DELETE</button>
           </div>
-          <div class="action-message" role="alert" ng-bind="message">
+          <div class="message" role="alert" ng-bind="message.caption" ng-class="{'message-default': message.status == 'default', 'message-success': message.status == 'success', 'message-failed': message.status == 'failed'}">
           </div>
           <!-- Start add form -->
           <form class="mt-5 ml-2 mr-2" id="addForm" ng-show="actions.add">
             <input type="text" name="name" class="form-control" placeholder="Name" ng-model="customer.name">
-            <input type="password" name="password" class="form-control" placeholder="Password" ng-model="customer.password">
             <input type="email" name="email" class="form-control" placeholder="Email" ng-model="customer.email">
             <input type="text" name="age" class="form-control" placeholder="Age" ng-model="customer.age">
-            <button type="submit" class="btn btn-default btn-block mt-5" ng-click="saveAddCustomer(customer)">Submit</button>         
+            <button type="submit" class="btn btn-default btn-block mt-5" ng-click="submitAddCustomer(customer)">Submit</button>         
           </form>
           <!-- End  add form -->
 
           <!-- Start update form -->    
           <form class="mt-5 ml-2 mr-2" id="updateForm" ng-show="actions.update">
-            <input type="text" name="name" class="form-control" placeholder="Name">
-            <input type="email" name="email" class="form-control" placeholder="Email">
-            <input type="text" name="age" class="form-control" placeholder="Age">
-            <button type="submit" class="btn btn-default btn-block mt-5">Submit</button>         
+            <input type="text" name="name" class="form-control" placeholder="Name" ng-model="selectedCustomer.name">
+            <input type="email" name="email" class="form-control" placeholder="Email" ng-model="selectedCustomer.email">
+            <input type="text" name="age" class="form-control" placeholder="Age" ng-model="selectedCustomer.age">
+            <button type="submit" class="btn btn-default btn-block mt-5" ng-click="submitUpdateCustomer(selectedCustomer)">Submit</button>         
           </form>
           <!-- End update form -->
 

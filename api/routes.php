@@ -55,7 +55,7 @@ $app->post('/api/add/customer', function(Request $request, Response $response){
 // Update specific customer by id
 $app->put('/api/update/customer/{id}', function(Request $request, Response $response, array $args){
   $id = (int)$args['id'];
-  $body_args = json_decode(json_encode($request->getParsedBody())); 
+  $body_args = json_decode($request->getBody()); 
 
   $retval = new CustomersModel();
   $retval = $retval->updateCustomerById($id,$body_args);
