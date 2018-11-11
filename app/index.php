@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Test App</title>
+  <title>iLista - A basic AngularJS - Slim CRUD App</title>
   <link rel="stylesheet" type="text/css" href="css/main.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <base href="/">
@@ -63,15 +63,16 @@
           </form>
           <!-- End update form -->
 
-          <!-- Start update form -->    
+          <!-- Start delete form -->    
           <form class="mt-5 ml-2 mr-2" id="deleteForm" ng-show="actions.delete">
-            <select name="customer" class="form-control">
+            <select name="deleteCustomer" class="form-control" ng-model="customer.id" ng-change="checkValue(customer)">
               <option value="">Choose a customer</option>
               <option ng-repeat="customer in customers" ng-value="customer.id" ng-bind="customer.name"></option>
               <button type="submit" class="btn btn-default btn-block mt-5">Submit</button> 
             </select>
+            <button type="submit" class="btn btn-default btn-block mt-5" ng-click="submitDeleteCustomer(customer.id)">Submit</button>  
           </form>
-          <!-- End update form -->
+          <!-- End delete form -->
         </section>
       </div>
     </div>

@@ -14,7 +14,7 @@
 
       $scope.message = {
         status: "default",
-        caption: "Choose an action"
+        caption: "Choose an action"     
       };
 
       $scope.getCustomers = function(){
@@ -29,39 +29,46 @@
         });
       };      
 
-      $scope.addCustomer = function(){
-        $scope.message.caption        = "Add a customer";
+      $scope.addCustomer = function(){        
         $scope.actions.add    = true;
         $scope.actions.update = false;
         $scope.actions.delete = false;
+
+        $scope.message.status  = "default";
+        $scope.message.caption = "Add a customer";
 
         angular.forEach($scope.customers, function(value, key) {
           value.clickable = false;
         });
       };
 
-      $scope.updateCustomer = function(){
-        $scope.message.caption        = "Update a customer";
+      $scope.updateCustomer = function(){        
         $scope.actions.update = true;
         $scope.actions.add    = false;
         $scope.actions.delete = false;
+
+        $scope.message.status  = "default";
+        $scope.message.caption = "Update a customer";
 
         angular.forEach($scope.customers, function(value, key) {
           value.clickable = true;
         });
       };
 
-      $scope.deleteCustomer = function(){
-        $scope.message.caption = "Delete a customer";
+      $scope.deleteCustomer = function(){        
         $scope.actions.delete  = true;
         $scope.actions.add     = false;
         $scope.actions.update  = false;
+
+        $scope.message.status = "default";
+        $scope.message.caption = "Delete a customer";
 
         angular.forEach($scope.customers, function(value, key) {
           value.clickable = false;
         });
       };
 
+      //Used by update screen
       $scope.displayCustomer = function(customer){
         $scope.selectedCustomer = {};
         if($scope.actions.update){
@@ -106,6 +113,30 @@
           });
         }        
       };
+
+      $scope.submitDeleteCustomer = function(customerId){
+        if(customerId) {
+          CustomerListingSrvc.customerDelete(customerId)
+          .then(function (response){
+            var data = response.data;
+
+            if(data.status == 'success') {
+              $scope.message.status = 'success';
+              $scope.message.caption = data.message;
+
+              $scope.getCustomers();
+            } else if (data.status == 'failed'){
+              $scope.message.status = 'failed';
+              $scope.message.caption = data.message;
+            } 
+          });
+        }
+      };
+
+      $scope.checkValue = function(args){
+        console.log(args);
+      };
+
       $scope.getCustomers();
     }]);   
 
@@ -139,7 +170,17 @@
               'Content-Type': 'application/x-www-form-urlencoded'
             }
           });
+        },
+        'customerDelete': function(id){
+          return $http({
+            method: 'DELETE',
+            url: `/api/delete/customer/${id}`,
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          });
         }
+
       }
       
     }]);
