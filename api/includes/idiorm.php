@@ -329,6 +329,12 @@
                 );
 
                 $db->setAttribute(PDO::ATTR_ERRMODE, self::$_config[$connection_name]['error_mode']);
+                // Added
+                // Lets the pdo retrieve original column datatype instead 
+                // of string for prepared statements
+                // For PHP => 5.3
+                $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
                 self::set_db($db, $connection_name);
             }
         }
