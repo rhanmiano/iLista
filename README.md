@@ -21,6 +21,7 @@ Ever since I started coding *PHP*, I've been using *XAMPP* to host and serve my 
 The project used **Slim** to handle our customer model and to create API endpoints that will be consumed by the app.
 
 Install Slim using Composer
+
 `composer require slim/slim "^3.0"`
 
 #### Idiorm and Paris (a minimalist database toolkit for PHP 5)
@@ -54,7 +55,7 @@ class CustomersModel extends Model{
 ```
 #### Endpoints
 Method | Description | Endpoint
-- | - | -
+------ | ----------- | --------
 GET | Retrieve all customers| /api/customers              
 GET | Retrieve specific customer by id| /api/customer/{id}
 POST | Add a customer | /api/add/customer
@@ -65,19 +66,35 @@ DELETE | Delete a customer by id | /api/delete/customer/{id}
 #### AngularJS
 Practicing creating modular apps using this framework along with `requireJS`.
 
-Installed its core file susing **bower**
+Installed its core files using **bower**
+
 `bower install angular --save`
 
 For **angular-route**
+
 `bower install angular-route --save`
 
 ### Other Dependencies
-Install our dev dependencies in **npm**
+Install our dev dependencies using **npm**
+
 `npm install`
 
+In `gulpfile.js` Make sure to configure browserSync.init's proxy value with:
+```
+gulp.task('serve', function() {
+  browserSync.init({
+    proxy: 'localhost/whatever-url-path-here', //proxy this url
+    port: 5000
+  });  
+});
+```
+
 We can then check our application by using the following commands: 
+
 `npm start`
+
 or
+
 `gulp dev`
 
 Mainly used *gulp* in this project for tasks automation such as *sass compiling*, *minifying*, and *livereload*.
@@ -104,6 +121,7 @@ Mainly used *gulp* in this project for tasks automation such as *sass compiling*
   - [ ] Mobile Responsiveness
   - [ ] Basic Security
   - [ ] Initialize SQL db structure
+  - [ ] Build files
 
 ## Additional Notes
-- Stumbled upon this [issue](https://bugs.php.net/bug.php?id=44341) of having MySQL return `string` for data that is originally `int` in the database (e.g. id: "6" instead of id: 6). The fix was to check if the mysql driver that is being used by PHP is `mysqlnd`, we can check by typing php --info on the terminal and look for `mysqlnd => enabled` along its indicated version. After confirming, I added `$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);` in `idiorm.php` line `336`. By doing so, PDO now retrieves original column datatype instead of returning string for fetched data using prepared statements.
+- Stumbled upon this [issue](https://bugs.php.net/bug.php?id=44341) of having MySQL return `string` for data that is originally `int` in the database (e.g. id: "6" instead of id: 6). The fix was to check if the mysql driver that is being used by PHP is `mysqlnd`, we can check by typing `php --info` on the terminal and look for `mysqlnd => enabled` along its indicated version. After confirming, I added `$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);` in `idiorm.php` line `336`. By doing so, PDO now retrieves original column datatype instead of returning string for fetched data using prepared statements.

@@ -41,7 +41,7 @@ gulp.task('reload', function(){
 
 gulp.task('serve', function() {
   browserSync.init({
-    proxy: 'ilista:5001',
+    proxy: 'ilista:5001', //proxy this url
     port: 5000
   });  
 });
