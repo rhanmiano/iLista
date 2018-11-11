@@ -10,22 +10,84 @@ iLista is a basic Customer Listing App where user can add, update, delete, and r
   5. Practice, and more practice
 
 ## Design Mockup Demo
-Design is created using AdobeXD and is viewable [here](https://xd.adobe.com/view/7e0c702b-7d6b-4958-4cc4-5735f5b12e9d-083d/)
+Prototype is created using AdobeXD and is viewable [here](https://xd.adobe.com/view/7e0c702b-7d6b-4958-4cc4-5735f5b12e9d-083d/)
 
-## Endpoints
-  - GET       /api/customers              
-  - GET       /api/customer/{id}
-  - POST      /api/add/customer
-  - PUT       /api/update/customer/{id}
-  - DELETE    /api/delete/customer/{id}
+## Setup and Dependencies
+### Local Environment
+Ever since I started coding *PHP*, I've been using *XAMPP* to host and serve my files locally.
+
+### API
+#### Slim (a microframework for PHP)
+The project used **Slim** to handle our customer model and to create API endpoints that will be consumed by the app.
+
+Install Slim using Composer
+`composer require slim/slim "^3.0"`
+
+#### Idiorm and Paris (a minimalist database toolkit for PHP 5)
+These two rockstars here are helping in talking to database in a simpler manner.
+
+In `api/connection.php` we just required the two php files and setup configuration like so:
+```
+require_once 'includes/idiorm.php';
+require_once 'includes/paris.php';
+
+ORM::configure('mysql:host=localhost; dbname=slim_testapp');
+ORM::configure('username', 'root');
+ORM::configure('password', '');
+ORM::configure('return_result_sets', false);
+ORM::configure('error_mode', PDO::ERRMODE_WARNING);
+```
+
+We can then use **Idiorm & Paris** syntax to perform operations that involves our database like the sample code below:
+
+```
+class Customers extends Model {
+  
+}
+
+class CustomersModel extends Model{
+  // Retrieves all the data from tbl 'Customers' 
+  // and turns it into an associative array
+  $customers = Model::factory('Customers')
+    ->find_array();
+} 
+```
+#### Endpoints
+Method | Description | Endpoint
+- | - | -
+GET | Retrieve all customers| /api/customers              
+GET | Retrieve specific customer by id| /api/customer/{id}
+POST | Add a customer | /api/add/customer
+PUT | Update a specific customer by id | /api/update/customer/{id}
+DELETE | Delete a customer by id | /api/delete/customer/{id}
+
+### APP
+#### AngularJS
+Practicing creating modular apps using this framework along with `requireJS`.
+
+Installed its core file susing **bower**
+`bower install angular --save`
+
+For **angular-route**
+`bower install angular-route --save`
+
+### Other Dependencies
+Install our dev dependencies in **npm**
+`npm install`
+
+We can then check our application by using the following commands: 
+`npm start`
+or
+`gulp dev`
+
+Mainly used *gulp* in this project for tasks automation such as *sass compiling*, *minifying*, and *livereload*.
 
 ## Todo
 ### Documentation
-  - [ ] Setup and dependencies
+  - [X] Setup and dependencies
   - [ ] File Structure
-  - [ ] Features
-### Coding
 
+### Coding
 #### API
   - [X] Retrieve all customers
   - [X] Retrieve specific customer
@@ -35,12 +97,13 @@ Design is created using AdobeXD and is viewable [here](https://xd.adobe.com/view
 #### Frontend
   - [X] Add function
   - [X] Update function
-  - [ ] Delete function
+  - [X] Delete function
   - [ ] Search function
 #### Other Checklist
   - [ ] Validations
-  - [ ] Mobile Responsive
+  - [ ] Mobile Responsiveness
   - [ ] Basic Security
+  - [ ] Initialize SQL db structure
 
 ## Additional Notes
-  - TODO
+- Stumbled upon this [issue](https://bugs.php.net/bug.php?id=44341) of having MySQL return `string` for data that is originally `int` in the database (e.g. id: "6" instead of id: 6). The fix was to check if the mysql driver that is being used by PHP is `mysqlnd`, we can check by typing php --info on the terminal and look for `mysqlnd => enabled` along its indicated version. After confirming, I added `$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);` in `idiorm.php` line `336`. By doing so, PDO now retrieves original column datatype instead of returning string for fetched data using prepared statements.
