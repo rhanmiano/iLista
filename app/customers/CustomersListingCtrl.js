@@ -4,7 +4,7 @@
   define([
     'ng-app'
   ], function(app){
-    app.controller('CustomersListingCtrl', ['$scope', '$rootScope', 'CustomerListingSrvc', function($scope, $rootScope, CustomerListingSrvc){      
+    app.controller('CustomersListingCtrl', ['$scope', '$timeout', 'CustomerListingSrvc', function($scope, $timeout, CustomerListingSrvc){      
       $scope.customer = {};
       $scope.actions = {
         add   : false,
@@ -24,7 +24,6 @@
           var customers = response.data.customers;        
           angular.forEach(customers, function(value, key){
             $scope.customers.push(value);
-
           });
         });
       };      
@@ -104,14 +103,24 @@
             if(data.status == 'success') {
               $scope.message.status = 'success';
               $scope.message.caption = data.message;
-
+              
+              $scope.selectedCustomer = {};  
               $scope.getCustomers();
+              
+              $timeout(function(){
+                angular.forEach($scope.customers, function(value, key) {
+                  value.clickable = true;
+                }); 
+              }, 800);
+               
             } else if (data.status == 'failed'){
               $scope.message.status = 'failed';
               $scope.message.caption = data.message;
             } 
           });
-        }        
+        }
+
+              
       };
 
       $scope.submitDeleteCustomer = function(customerId){

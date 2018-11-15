@@ -7,7 +7,7 @@
   <base href="/">
 </head>
 <body>
-  <div class="container-fluid" ng-controller="CustomersListingCtrl" ng-cloak>
+  <div class="container-fluid" ng-controller="CustomersListingCtrl" >
     <div class="app-wrapper">
       <div class="row">
         <section class="app-list col-md-8">
@@ -46,7 +46,7 @@
           <div class="message" role="alert" ng-bind="message.caption" ng-class="{'message-default': message.status == 'default', 'message-success': message.status == 'success', 'message-failed': message.status == 'failed'}">
           </div>
           <!-- Start add form -->
-          <form class="mt-5 ml-2 mr-2" id="addForm" ng-show="actions.add">
+          <form class="mt-5 ml-2 mr-2" id="addForm" ng-show="actions.add" ng-cloak>
             <input type="text" name="name" class="form-control" placeholder="Name" ng-model="customer.name">
             <input type="email" name="email" class="form-control" placeholder="Email" ng-model="customer.email">
             <input type="text" name="age" class="form-control" placeholder="Age" ng-model="customer.age">
@@ -55,7 +55,7 @@
           <!-- End  add form -->
 
           <!-- Start update form -->    
-          <form class="mt-5 ml-2 mr-2" id="updateForm" ng-show="actions.update">
+          <form class="mt-5 ml-2 mr-2" id="updateForm" ng-show="actions.update" ng-cloak>
             <input type="text" name="name" class="form-control" placeholder="Name" ng-model="selectedCustomer.name">
             <input type="email" name="email" class="form-control" placeholder="Email" ng-model="selectedCustomer.email">
             <input type="text" name="age" class="form-control" placeholder="Age" ng-model="selectedCustomer.age">
@@ -64,7 +64,7 @@
           <!-- End update form -->
 
           <!-- Start delete form -->    
-          <form class="mt-5 ml-2 mr-2" id="deleteForm" ng-show="actions.delete">
+          <form class="mt-5 ml-2 mr-2" id="deleteForm" ng-show="actions.delete" ng-cloak>
             <select name="deleteCustomer" class="form-control" ng-model="customer.id" ng-change="checkValue(customer)">
               <option value="">Choose a customer</option>
               <option ng-repeat="customer in customers" ng-value="customer.id" ng-bind="customer.name"></option>

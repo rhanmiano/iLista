@@ -3,4 +3,5 @@ node_modules/
 vendor/
 bower_components/
 app/sass/bootstrap
+app/css
 *.css.map
