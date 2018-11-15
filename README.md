@@ -64,7 +64,7 @@ DELETE | Delete a customer by id | /api/delete/customer/{id}
 
 ### APP
 #### AngularJS
-Practicing creating modular apps using this framework along with `requireJS`.
+Used this framework to build UI functionalities and http calls.
 
 Installed its core files using **bower**
 
@@ -78,6 +78,10 @@ For **angular-route**
 Install our dev dependencies using **npm**
 
 `npm install`
+
+#### Gulp
+
+Mainly used *gulp* in this project for tasks automation such as *sass compiling*, *minifying*, and *livereload*.
 
 In `gulpfile.js` Make sure to configure browserSync.init's proxy value with:
 ```
@@ -96,8 +100,6 @@ We can then check our application by using the following commands:
 or
 
 `gulp dev`
-
-Mainly used *gulp* in this project for tasks automation such as *sass compiling*, *minifying*, and *livereload*.
 
 ## Todo
 ### Documentation
