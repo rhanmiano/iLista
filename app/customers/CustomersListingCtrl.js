@@ -81,12 +81,12 @@
         .then(function (response){
           var data = response.data;
           if(data.status == 'success') {
-            $scope.message.status = 'success';        
+            $scope.message.status = data.status;        
             $scope.message.caption = data.message;
             $scope.customer = {};
-            $scope.customers.push(customer);
+            $scope.getCustomers();
           } else if (data.status == 'failed'){
-            $scope.message.status = 'failed';
+            $scope.message.status = data.status;
             $scope.message.caption = data.message;
             $scope.customer = {};
           }          
@@ -101,7 +101,7 @@
             var data = response.data;
 
             if(data.status == 'success') {
-              $scope.message.status = 'success';
+              $scope.message.status = data.status;
               $scope.message.caption = data.message;
               
               $scope.selectedCustomer = {};  
@@ -114,7 +114,7 @@
               }, 800);
                
             } else if (data.status == 'failed'){
-              $scope.message.status = 'failed';
+              $scope.message.status = data.status;
               $scope.message.caption = data.message;
             } 
           });
@@ -130,12 +130,12 @@
             var data = response.data;
 
             if(data.status == 'success') {
-              $scope.message.status = 'success';
+              $scope.message.status = data.status;
               $scope.message.caption = data.message;
 
               $scope.getCustomers();
             } else if (data.status == 'failed'){
-              $scope.message.status = 'failed';
+              $scope.message.status = data.status;
               $scope.message.caption = data.message;
             } 
           });
@@ -189,9 +189,7 @@
             }
           });
         }
-
-      }
-      
+      }      
     }]);
   });
 }());

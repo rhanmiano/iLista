@@ -12,27 +12,32 @@
       <div class="row">
         <section class="app-list col-md-8">
           <div class="row">
-            <div class="customer-header">      
+            <header class="customer-header">      
               <h1><i class="fas fa-user-circle fas-fw"></i>Customers</h1> 
-            </div>
+            </header>        
+          </div>
+          <div class="row">
+            <input type="text" name="search" class="form-control mb-5" ng-model="searchCustomer" placeholder="Search a customer">
+          </div>
+          <div class="row">
             <div class="col-md-12">    
               <table class="table table-fixed">
-              <thead>
-                <tr>
-                  <th class="col-md-1">ID</th>
-                  <th class="col-md-4">Name</th>
-                  <th class="col-md-5">Email</th>
-                  <th class="col-md-2">Age</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="customer in customers" ng-class="{'is-clickable': customer.clickable}" ng-click="displayCustomer(customer)">
-                  <td ng-bind="$index + 1" class="col-md-1"></td>
-                  <td ng-bind="customer.name" class="col-md-4"></td>
-                  <td ng-bind="customer.email" class="col-md-5"></td>
-                  <td ng-bind="customer.age" class="col-md-2"></td>
-                </tr>
-            </table>
+                <thead>
+                  <tr>
+                    <th class="col-md-1">ID</th>
+                    <th class="col-md-4">Name</th>
+                    <th class="col-md-5">Email</th>
+                    <th class="col-md-2">Age</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="customer in customers | filter:searchCustomer" ng-class="{'is-clickable': customer.clickable}" ng-click="displayCustomer(customer)">
+                    <td ng-bind="$index + 1" class="col-md-1"></td>
+                    <td ng-bind="customer.name" class="col-md-4"></td>
+                    <td ng-bind="customer.email" class="col-md-5"></td>
+                    <td ng-bind="customer.age" class="col-md-2"></td>
+                  </tr>
+              </table>
             </div>
           </div>
         </section>
