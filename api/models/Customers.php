@@ -1,6 +1,6 @@
 <?php
 require_once '/../connection.php';
-require '/../includes/global_vars.php';
+require '/../includes/global.php';
 
 class Customers extends Model {
   
@@ -98,15 +98,23 @@ class CustomersModel extends Model{
     }
     
     $customer->set_expr('updated_at', 'now()');
-    if($customer->save()){
-      $data->status          = "success";
-      $data->columns_updated = $updated_columns;
-      $data->message         = "Customer updated successfully";
+
+    if (sizeof($updated_columns) > 0) {
+      if($customer->save()){
+        $data->status          = "success";
+        $data->columns_updated = $updated_columns;
+        $data->message         = "Customer updated successfully";      
+      } else {
+        $data->status  = "failed";
+        $data->data    = null;
+        $data->message = "Cannot do update due to some error";
+      }
     } else {
-      $data->status  = "failed";
-      $data->data    = null;
-      $data->message = "Cannot do update due to some error";
+      $data->status          = "failed";
+      $data->columns_updated = $updated_columns;
+      $data->message         = "No changes have been made";
     }
+    
     return $data;
   }
 
