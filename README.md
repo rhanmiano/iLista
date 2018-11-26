@@ -30,11 +30,15 @@ The project used **Slim** to handle our customer model and to create API endpoin
 
 #### Install PHP dependencies
 
-`composer install`
+```
+composer install
+```
 
 #### Initialize Database
 
-`php api/install.php`
+```
+php api/install.php
+```
 
 #### Idiorm and Paris (a minimalist database toolkit for PHP 5)
 Talk to database in a simpler manner by using these two.
@@ -80,16 +84,22 @@ Used this framework to build UI functionalities and http calls.
 
 Installed its core files using **bower**
 
-`bower install angular --save`
+```
+bower install angular --save
+```
 
 For **angular-route**
 
-`bower install angular-route --save`
+```
+bower install angular-route --save
+```
 
 ### Other Dependencies
 Install our dev dependencies using **npm**
 
-`npm install`
+```
+npm install
+```
 
 #### Gulp
 
@@ -107,11 +117,15 @@ gulp.task('serve', function() {
 
 We can then check our application by using the following commands: 
 
-`npm start`
+```
+npm start
+```
 
 or
 
-`gulp dev`
+```
+gulp dev
+```
 
 ## Todo
 ### Documentation
@@ -131,7 +145,7 @@ or
   - [X] Search function
 #### Other Checklist
   - [X] Validations
-  - [ ] Mobile Responsiveness
+  - [X] Mobile Responsiveness
   - [X] Initialize SQL db structure
 
 ## Additional Notes
