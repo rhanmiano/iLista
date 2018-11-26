@@ -4,14 +4,14 @@ requirejs.config({
   baseUrl: '',
   paths: {
     //vendor
-    'jquery': 'app/js/lib/jquery-3.3.1.min',
-    'bootstrap': 'app/js/lib/bootstrap.min',
-    'domReady': 'app/js/lib/dom-ready',
+    'jquery': 'js/lib/jquery-3.3.1.min',
+    'bootstrap': 'js/lib/bootstrap.min',
+    'domReady': 'js/lib/dom-ready',
     //angular
-    'angular': 'app/js/lib/angular',
-    'angular-route': 'app/js/lib/angular-route',
+    'angular': 'js/lib/angular',
+    'angular-route': 'js/lib/angular-route',
 
-    'ng-app': 'app/js/app'
+    'ng-app': 'js/app'
   },
   shim: {
     'angular': {
@@ -28,5 +28,5 @@ requirejs.config({
       exports: 'bootstrap'
     }
   },
-  deps: ['app/js/app-bootstrap']
+  deps: ['js/app-bootstrap']
 });

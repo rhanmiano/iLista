@@ -4,36 +4,35 @@
 @import 'vars';
 
 body{
+  font-size: .8em;
   background-color: $layout-white;
-  overflow: hidden;
 }
 
 .app-wrapper{
   background-color: $layout-white;
   color: $layout-contrast-black;
-  //height: 100vh;
   
   .row > section {
-    padding: 50px 50px;
+    padding: 30px 30px;
     
     &.app-list{
 
       .row > .customer-header{
-        margin-bottom: 50px;
+        width: 100%;
+        margin-bottom: 25px;
         color: $layout-base;
         
         i.fas{
           font-size: 2.5 rem;
           margin-right: 10px;
-        } 
+        }        
       }
-      
     }
 
     &.app-actions{
       background-color: $layout-base;
       color: $layout-white;
-      height: 100vh;
+      height: 600px;
       
       .btn-actions {
         display: flex;
@@ -45,6 +44,8 @@ body{
           -webkit-flex-grow: 1;
                 flex-grow: 1;
           margin: 0 5px;
+          padding: -10px;
+          font-size: .9em;
         }
         
         .btn-add {
@@ -88,6 +89,11 @@ body{
           
           &::-webkit-input-placeholder {
             color: $layout-white;
+            opacity: .5;
+          }
+          &::placeholder {
+            color: $layout-white;
+            opacity: .5;
           }
         }
 
@@ -97,36 +103,7 @@ body{
       }
     }
   }
-
-  .table-fixed{
-    width: 100%;
-    
-    tbody{
-      max-height: 750px;
-      overflow-y:auto;
-      width: 100%;
-    }
-
-    thead,tbody,tr,td,th{
-      display: flow-root;
-    }
-
-    tbody{
-      td{
-        float: left;
-      }
-    }
-    thead {
-      tr{
-        th{
-          float:left;
-        }
-      }
-    } 
-    
-  }
 }
-
 // Helpers
 .is-clickable {
   cursor: pointer;
@@ -134,4 +111,69 @@ body{
   &:hover {
     background-color: gainsboro;
   }
+}
+
+// XS screens
+@media only screen and (min-width: 0px) and (max-width: 320px){
+  .table {
+    display: block;
+    overflow-x: scroll;
+  }  
+}
+
+// Medium sized screen
+@media only screen and (min-width: 601px) {
+  body{    
+    overflow: none;
+    font-size: .9em;
+  }
+
+  .app-wrapper{
+    .row > section:nth-child(1) {
+      padding: 40px 30px;  
+    }
+
+    .row > section:nth-child(2) {
+      padding: 40px 15px;     
+    }
+
+    .row > section {
+      &.app-list{        
+        .row > .customer-header{
+          margin-bottom: 30px;
+        }        
+      }
+
+      &.app-actions{
+        height: 100vh;
+      }
+    }
+  }  
+}
+
+// Desktop sized screen
+@media only screen and (min-width: 993px) { 
+  body{
+    font-size: 1em;
+  }
+
+  .app-wrapper{    
+    .row > section {
+      padding: 50px 50px !important;
+      
+      &.app-list{
+
+        .row > .customer-header{
+          margin-bottom: 50px;
+        }
+        
+      }
+
+      &.app-actions{        
+        .btn {
+          font-size: 1em;
+        }
+      }
+    }
+  }  
 }

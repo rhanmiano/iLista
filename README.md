@@ -16,23 +16,35 @@ Prototype is created using AdobeXD and is viewable [here](https://xd.adobe.com/v
 ### Local Environment
 Ever since I started coding *PHP*, I've been using *XAMPP* to host and serve my files locally.
 
+#### Virtual Host
+```
+<VirtualHost *:5001>
+    DocumentRoot "E:/rhan/dev/xampp/htdocs/slim/ilista"
+    ServerName ilista
+</VirtualHost>
+```
+
 ### API
 #### Slim (a microframework for PHP)
 The project used **Slim** to handle our customer model and to create API endpoints that will be consumed by the app.
 
-Install Slim using Composer
+#### Install PHP dependencies
 
-`composer require slim/slim "^3.0"`
+`composer install`
+
+#### Initialize Database
+
+`php api/install.php`
 
 #### Idiorm and Paris (a minimalist database toolkit for PHP 5)
-These two rockstars here are helping in talking to database in a simpler manner.
+Talk to database in a simpler manner by using these two.
 
 In `api/connection.php` we just required the two php files and setup configuration like so:
 ```
 require_once 'includes/idiorm.php';
 require_once 'includes/paris.php';
 
-ORM::configure('mysql:host=localhost; dbname=slim_testapp');
+ORM::configure('mysql:host=localhost; dbname=testapp');
 ORM::configure('username', 'root');
 ORM::configure('password', '');
 ORM::configure('return_result_sets', false);
@@ -104,7 +116,6 @@ or
 ## Todo
 ### Documentation
   - [X] Setup and dependencies
-  - [ ] File Structure
 
 ### Coding
 #### API
@@ -117,13 +128,11 @@ or
   - [X] Add function
   - [X] Update function
   - [X] Delete function
-  - [ ] Search function
+  - [X] Search function
 #### Other Checklist
-  - [ ] Validations
+  - [X] Validations
   - [ ] Mobile Responsiveness
-  - [ ] Basic Security
-  - [ ] Initialize SQL db structure
-  - [ ] Build files
+  - [X] Initialize SQL db structure
 
 ## Additional Notes
 - Stumbled upon this [issue](https://bugs.php.net/bug.php?id=44341) of having MySQL return `string` for data that is originally `int` in the database (e.g. id: "6" instead of id: 6). The fix was to check if the mysql driver that is being used by PHP is `mysqlnd`, we can check by typing `php --info` on the terminal and look for `mysqlnd => enabled` along its indicated version. After confirming, I added `$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);` in `idiorm.php` line `336`. By doing so, PDO now retrieves original column datatype instead of returning string for fetched data using prepared statements.

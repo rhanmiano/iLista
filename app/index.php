@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, IE=11">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="author" content="Rhan Miano">
+  <meta name="description" content="A basic AngularJS - Slim CRUD Application">
+
   <title>iLista - A basic AngularJS - Slim CRUD App</title>
   <link rel="stylesheet" type="text/css" href="css/main.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-  <base href="/">
+
+  <base href="">
 </head>
 <body>
   <div class="container-fluid" ng-controller="CustomersListingCtrl" >
     <div class="app-wrapper">
       <div class="row">
         <section class="app-list col-md-8">
-          <div class="row">
-            <header class="customer-header">      
-              <h1><i class="fas fa-user-circle fas-fw"></i>Customers</h1> 
+          <div class="row">            
+            <header class="customer-header">
+              <h2><i class="fas fa-user-circle fas-fw"></i>Customers</h2> 
             </header>        
           </div>
           <div class="row">
@@ -21,21 +29,21 @@
           </div>
           <div class="row">
             <div class="col-md-12">    
-              <table class="table table-fixed">
+              <table class="table table-condensed">
                 <thead>
                   <tr>
-                    <th class="col-md-1">ID</th>
-                    <th class="col-md-4">Name</th>
-                    <th class="col-md-5">Email</th>
-                    <th class="col-md-2">Age</th>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Age</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr ng-repeat="customer in customers | filter:searchCustomer" ng-class="{'is-clickable': customer.clickable}" ng-click="displayCustomer(customer)">
-                    <td ng-bind="$index + 1" class="col-md-1"></td>
-                    <td ng-bind="customer.name" class="col-md-4"></td>
-                    <td ng-bind="customer.email" class="col-md-5"></td>
-                    <td ng-bind="customer.age" class="col-md-2"></td>
+                    <td ng-bind="$index + 1"></td>
+                    <td ng-bind="customer.name"></td>
+                    <td ng-bind="customer.email"></td>
+                    <td ng-bind="customer.age"></td>
                   </tr>
               </table>
             </div>
@@ -83,6 +91,6 @@
     </div>
   </div>
   
-  <script type="text/javascript" data-main="app/js/index" src="app/js/lib/require.js"></script>
+  <script type="text/javascript" data-main="js/index" src="js/lib/require.js"></script>
 </body>
 </html>

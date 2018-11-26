@@ -3,7 +3,7 @@
 
   define([
     'ng-app',
-    'app/customers/CustomersListingCtrl'
+    'customers/CustomersListingCtrl'
   ],
   function(app){   
 

@@ -41,13 +41,14 @@
         });
       };
 
-      $scope.updateCustomer = function(){        
+      $scope.updateCustomer = function(){  
+        $scope.selectedCustomer = {};      
         $scope.actions.update = true;
         $scope.actions.add    = false;
         $scope.actions.delete = false;
 
         $scope.message.status  = "default";
-        $scope.message.caption = "Update a customer";
+        $scope.message.caption = "Choose a customer to be updated";
 
         angular.forEach($scope.customers, function(value, key) {
           value.clickable = true;
@@ -60,7 +61,7 @@
         $scope.actions.update  = false;
 
         $scope.message.status = "default";
-        $scope.message.caption = "Delete a customer";
+        $scope.message.caption = "Choose a customer to be deleted";
 
         angular.forEach($scope.customers, function(value, key) {
           value.clickable = false;
@@ -68,8 +69,7 @@
       };
 
       //Used by update screen
-      $scope.displayCustomer = function(customer){
-        $scope.selectedCustomer = {};
+      $scope.displayCustomer = function(customer){        
         if($scope.actions.update){
           $scope.selectedCustomer = angular.copy(customer);
         }
@@ -94,7 +94,8 @@
       };
 
       $scope.submitUpdateCustomer = function(customer){
-        if(customer) {
+        $scope.checkValue(customer);
+        if(!angular.equals({}, customer)){
           var data = angular.toJson(customer);
           CustomerListingSrvc.customerUpdate(customer.id, data)
           .then(function (response){
@@ -118,9 +119,10 @@
               $scope.message.caption = data.message;
             } 
           });
-        }
-
-              
+        } else {
+          $scope.message.status = "failed";
+          $scope.message.caption = "No selected customer";
+        }              
       };
 
       $scope.submitDeleteCustomer = function(customerId){
@@ -173,7 +175,7 @@
         'customerUpdate': function(id, data){
           return $http({
             method: 'PUT',
-            url: `/api/update/customer/${id}`,
+            url: '/api/update/customer/' + id,
             data: data,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -183,7 +185,7 @@
         'customerDelete': function(id){
           return $http({
             method: 'DELETE',
-            url: `/api/delete/customer/${id}`,
+            url: '/api/delete/customer/' + id,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
             }
