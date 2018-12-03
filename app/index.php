@@ -60,6 +60,7 @@
           </div>
         </section>
         <section class="app-actions col-md-4">
+          <a class="btn btn-default btn-small" title="See github documentation" href="https://github.com/rhanmiano/iLista" rel="noopener" target="_blank" role="button">See doc</a>
           <h1 class="text-center mb-5">iLista</h1>
           <div class="btn-actions">
             <button class="btn btn-add btn-lg shadow-sm" ng-click="addCustomer()">ADD</button>
