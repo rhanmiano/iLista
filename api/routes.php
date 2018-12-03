@@ -11,7 +11,7 @@ $app->add(function ($request, $response, $next) {
     return $response
             ->withHeader('Access-Control-Allow-Origin', '*')
             ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST');
 });
 
 // Get all customers
@@ -53,7 +53,7 @@ $app->post('/api/add/customer', function(Request $request, Response $response){
 });
 
 // Update specific customer by id
-$app->put('/api/update/customer/{id}', function(Request $request, Response $response, array $args){
+$app->post('/api/update/customer/{id}', function(Request $request, Response $response, array $args){
   $id = (int)$args['id'];
   $body_args = json_decode($request->getBody()); 
 
@@ -67,7 +67,7 @@ $app->put('/api/update/customer/{id}', function(Request $request, Response $resp
 });
 
 // Delete specific customer by id
-$app->delete('/api/delete/customer/{id}', function(Request $request, Response $response, array $args){
+$app->post('/api/delete/customer/{id}', function(Request $request, Response $response, array $args){
   $id = (int)$args['id'];
 
   $retval = new CustomersModel();

@@ -27,7 +27,7 @@
           <div class="row">
             <input type="text" name="search" class="form-control mb-5" ng-model="searchCustomer" placeholder="Search a customer">
           </div>
-          <div class="row">
+          <div class="row">            
             <div class="col-md-12">    
               <table class="table table-condensed">
                 <thead>
@@ -37,14 +37,24 @@
                     <th>Email</th>
                     <th>Age</th>
                   </tr>
-                </thead>
+                </thead>                
                 <tbody>
-                  <tr ng-repeat="customer in customers | filter:searchCustomer" ng-class="{'is-clickable': customer.clickable}" ng-click="displayCustomer(customer)">
+                  <tr ng-show="page.loading">
+                    <td colspan="4">
+                    <div class="ball-pulse">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>                    
+                    </td>
+                  </tr>
+                  <tr ng-repeat="customer in customers | filter:searchCustomer" ng-class="{'is-clickable': customer.clickable}" ng-click="displayCustomer(customer)" ng-show="!page.loading">
                     <td ng-bind="$index + 1"></td>
                     <td ng-bind="customer.name"></td>
                     <td ng-bind="customer.email"></td>
                     <td ng-bind="customer.age"></td>
                   </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -63,7 +73,7 @@
             <input type="text" name="name" class="form-control" placeholder="Name" ng-model="customer.name">
             <input type="email" name="email" class="form-control" placeholder="Email" ng-model="customer.email">
             <input type="text" name="age" class="form-control" placeholder="Age" ng-model="customer.age">
-            <button type="submit" class="btn btn-default btn-block mt-5" ng-click="submitAddCustomer(customer)">Submit</button>         
+            <button type="submit" class="btn btn-default btn-block mt-5" ng-click="submitAddCustomer(customer)" ng-disabled="page.loading">Submit</button>         
           </form>
           <!-- End  add form -->
 
@@ -72,7 +82,7 @@
             <input type="text" name="name" class="form-control" placeholder="Name" ng-model="selectedCustomer.name">
             <input type="email" name="email" class="form-control" placeholder="Email" ng-model="selectedCustomer.email">
             <input type="text" name="age" class="form-control" placeholder="Age" ng-model="selectedCustomer.age">
-            <button type="submit" class="btn btn-default btn-block mt-5" ng-click="submitUpdateCustomer(selectedCustomer)">Submit</button>         
+            <button type="submit" class="btn btn-default btn-block mt-5" ng-click="submitUpdateCustomer(selectedCustomer)" ng-disabled="page.loading">Submit</button>         
           </form>
           <!-- End update form -->
 
@@ -83,7 +93,7 @@
               <option ng-repeat="customer in customers" ng-value="customer.id" ng-bind="customer.name"></option>
               <button type="submit" class="btn btn-default btn-block mt-5">Submit</button> 
             </select>
-            <button type="submit" class="btn btn-default btn-block mt-5" ng-click="submitDeleteCustomer(customer.id)">Submit</button>  
+            <button type="submit" class="btn btn-default btn-block mt-5" ng-click="submitDeleteCustomer(customer.id)" ng-disabled="page.loading">Submit</button>  
           </form>
           <!-- End delete form -->
         </section>

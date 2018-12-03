@@ -4,7 +4,8 @@
   define([
     'ng-app'
   ], function(app){
-    app.controller('CustomersListingCtrl', ['$scope', '$timeout', 'CustomerListingSrvc', function($scope, $timeout, CustomerListingSrvc){      
+    app.controller('CustomersListingCtrl', ['$scope', '$timeout', 'CustomerListingSrvc', function($scope, $timeout, CustomerListingSrvc){
+      $scope.customers = [];   
       $scope.customer = {};
       $scope.actions = {
         add   : false,
@@ -17,14 +18,18 @@
         caption: "Choose an action"     
       };
 
+      $scope.page = {
+        loading: true
+      }
+
       $scope.getCustomers = function(){
-        $scope.customers = [];
         CustomerListingSrvc.customersAllGet()
         .then(function(response){
           var customers = response.data.customers;        
           angular.forEach(customers, function(value, key){
             $scope.customers.push(value);
           });
+          $scope.page.loading = $scope.customers.length === 0 ? true : false;         
         });
       };      
 
@@ -76,6 +81,11 @@
       }
 
       $scope.submitAddCustomer = function(customer){
+        $scope.customers    = [];
+        $scope.page.loading = true;
+        $scope.message.status = 'default';        
+        $scope.message.caption = 'Waiting for response...';
+
         var data = angular.toJson(customer);
         CustomerListingSrvc.customerAdd(data)
         .then(function (response){
@@ -94,6 +104,11 @@
       };
 
       $scope.submitUpdateCustomer = function(customer){
+        $scope.customers    = [];
+        $scope.page.loading = true;
+        $scope.message.status = 'default';        
+        $scope.message.caption = 'Waiting for response...';
+
         $scope.checkValue(customer);
         if(!angular.equals({}, customer)){
           var data = angular.toJson(customer);
@@ -126,6 +141,11 @@
       };
 
       $scope.submitDeleteCustomer = function(customerId){
+        $scope.customers    = [];
+        $scope.page.loading = true;
+        $scope.message.status = 'default';        
+        $scope.message.caption = 'Waiting for response...';
+        
         if(customerId) {
           CustomerListingSrvc.customerDelete(customerId)
           .then(function (response){
@@ -156,7 +176,8 @@
         'customersAllGet': function(){
           return $http({
             method: 'GET',
-            url: '/api/customers',
+            url: 'https://www.rhanmiano.com/api/ilista/customers',
+            // url: '/api/customers',            
             headers: {
               'Content-Type': 'application/json'
             }
@@ -165,7 +186,8 @@
         'customerAdd': function(data){
           return $http({
             method: 'POST',
-            url: '/api/add/customer',
+            url: 'https://www.rhanmiano.com/api/ilista/add/customer',
+            // url: '/api/add/customer',
             data: data,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -174,8 +196,9 @@
         },
         'customerUpdate': function(id, data){
           return $http({
-            method: 'PUT',
-            url: '/api/update/customer/' + id,
+            method: 'POST',
+            url: 'https://www.rhanmiano.com/api/ilista/update/customer/' + id,
+            // url: '/api/update/customer/' + id,
             data: data,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -184,8 +207,9 @@
         },
         'customerDelete': function(id){
           return $http({
-            method: 'DELETE',
-            url: '/api/delete/customer/' + id,
+            method: 'POST',
+            url: 'https://www.rhanmiano.com/api/ilista/delete/customer/' + id,
+            // url: '/api/delete/customer/' + id,            
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
             }
