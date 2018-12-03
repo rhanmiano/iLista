@@ -1,5 +1,5 @@
 # iLista - A Basic AngularJS-Slim CRUD App
-iLista is a basic Customer Listing App where user can add, update, delete, and retrieve customers. Built with [Slim framework](https://www.slimframework.com/) for serving API routes and handling backend calls and [AngularJS](https://angularjs.org/) for the frontend.
+iLista is a basic Customer Listing App where user can add, update, delete, and retrieve customers. Built with [Slim framework](https://www.slimframework.com/) for serving API routes and [AngularJS](https://angularjs.org/) for the frontend and handling backend calls.
 
 ## Objectives
 
@@ -147,6 +147,12 @@ gulp dev
   - [X] Validations
   - [X] Mobile Responsiveness
   - [X] Initialize SQL db structure
+
+
+## Improvements/What's next?
+  - Autocomplete for selecting/searching customer on delete
+  - What are possible risks in security?
+  - Add additional component (maybe profile section for each customer)
 
 ## Additional Notes
 - Stumbled upon this [issue](https://bugs.php.net/bug.php?id=44341) of having MySQL return `string` for data that is originally `int` in the database (e.g. id: "6" instead of id: 6). The fix was to check if the mysql driver that is being used by PHP is `mysqlnd`, we can check by typing `php --info` on the terminal and look for `mysqlnd => enabled` along its indicated version. After confirming, I added `$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);` in `idiorm.php` line `336`. By doing so, PDO now retrieves original column datatype instead of returning string for fetched data using prepared statements.
