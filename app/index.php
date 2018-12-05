@@ -60,7 +60,7 @@
           </div>
         </section>
         <section class="app-actions col-md-4">
-          <a class="btn btn-default btn-small" title="See github documentation" href="https://github.com/rhanmiano/iLista" rel="noopener" target="_blank" role="button">See doc</a>
+          <a class="btn btn-default btn-small" title="See github documentation" href="https://github.com/rhanmiano/iLista" rel="noopener" target="_blank" role="button">About</a>
           <h1 class="text-center mb-5">iLista</h1>
           <div class="btn-actions">
             <button class="btn btn-add btn-lg shadow-sm" ng-click="addCustomer()">ADD</button>
@@ -71,18 +71,18 @@
           </div>
           <!-- Start add form -->
           <form class="mt-5 ml-2 mr-2" id="addForm" ng-show="actions.add" ng-cloak>
-            <input type="text" name="name" class="form-control" placeholder="Name" ng-model="customer.name">
-            <input type="email" name="email" class="form-control" placeholder="Email" ng-model="customer.email">
-            <input type="text" name="age" class="form-control" placeholder="Age" ng-model="customer.age">
+            <input type="text" name="name" class="form-control" placeholder="Name*" ng-model="customer.name">
+            <input type="email" name="email" class="form-control" placeholder="Email*" ng-model="customer.email">
+            <input type="text" name="age" class="form-control" placeholder="Age*" ng-model="customer.age">
             <button type="submit" class="btn btn-default btn-block mt-5" ng-click="submitAddCustomer(customer)" ng-disabled="page.loading">Submit</button>         
           </form>
           <!-- End  add form -->
 
           <!-- Start update form -->    
           <form class="mt-5 ml-2 mr-2" id="updateForm" ng-show="actions.update" ng-cloak>
-            <input type="text" name="name" class="form-control" placeholder="Name" ng-model="selectedCustomer.name">
-            <input type="email" name="email" class="form-control" placeholder="Email" ng-model="selectedCustomer.email">
-            <input type="text" name="age" class="form-control" placeholder="Age" ng-model="selectedCustomer.age">
+            <input type="text" name="name" class="form-control" placeholder="Name*" ng-model="selectedCustomer.name">
+            <input type="email" name="email" class="form-control" placeholder="Email*" ng-model="selectedCustomer.email">
+            <input type="text" name="age" class="form-control" placeholder="Age*" ng-model="selectedCustomer.age">
             <button type="submit" class="btn btn-default btn-block mt-5" ng-click="submitUpdateCustomer(selectedCustomer)" ng-disabled="page.loading">Submit</button>         
           </form>
           <!-- End update form -->

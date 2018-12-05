@@ -48,9 +48,9 @@
 
       $scope.updateCustomer = function(){  
         $scope.selectedCustomer = {};      
-        $scope.actions.update = true;
-        $scope.actions.add    = false;
-        $scope.actions.delete = false;
+        $scope.actions.update   = true;
+        $scope.actions.add      = false;
+        $scope.actions.delete   = false;
 
         $scope.message.status  = "default";
         $scope.message.caption = "Choose a customer to be updated";
@@ -65,7 +65,7 @@
         $scope.actions.add     = false;
         $scope.actions.update  = false;
 
-        $scope.message.status = "default";
+        $scope.message.status  = "default";
         $scope.message.caption = "Choose a customer to be deleted";
 
         angular.forEach($scope.customers, function(value, key) {
@@ -81,43 +81,51 @@
       }
 
       $scope.submitAddCustomer = function(customer){
-        $scope.customers    = [];
-        $scope.page.loading = true;
         $scope.message.status = 'default';        
         $scope.message.caption = 'Waiting for response...';
 
-        var data = angular.toJson(customer);
-        CustomerListingSrvc.customerAdd(data)
-        .then(function (response){
-          var data = response.data;
-          if(data.status == 'success') {
-            $scope.message.status = data.status;        
-            $scope.message.caption = data.message;
-            $scope.customer = {};
-            $scope.getCustomers();
-          } else if (data.status == 'failed'){
-            $scope.message.status = data.status;
-            $scope.message.caption = data.message;
-            $scope.customer = {};
-          }          
-        });
-      };
-
-      $scope.submitUpdateCustomer = function(customer){
-        $scope.customers    = [];
-        $scope.page.loading = true;
-        $scope.message.status = 'default';        
-        $scope.message.caption = 'Waiting for response...';
-
-        $scope.checkValue(customer);
-        if(!angular.equals({}, customer)){
+        if (!angular.equals({}, customer)) {
           var data = angular.toJson(customer);
-          CustomerListingSrvc.customerUpdate(customer.id, data)
+          CustomerListingSrvc.customerAdd(data)
           .then(function (response){
             var data = response.data;
-
             if(data.status == 'success') {
-              $scope.message.status = data.status;
+              $scope.page.loading    = true;
+              $scope.customers       = [];
+              $scope.message.status  = data.status;        
+              $scope.message.caption = data.message;
+              $scope.customer        = {};
+              $scope.getCustomers();
+            } else if (data.status == 'failed'){
+              $scope.message.status  = data.status;
+              $scope.message.caption = data.message;
+              $scope.customer        = {};
+              $scope.page.loading    = false;
+            }          
+          });
+        } else {
+          $scope.message.status = "failed";
+          $scope.message.caption = "Required fields must not be empty";
+          $scope.page.loading = false;
+        }
+        
+      };
+
+      $scope.submitUpdateCustomer = function(customer){        
+        $scope.message.status = 'default';        
+        $scope.message.caption = 'Waiting for response...';
+
+        if (!angular.equals({}, customer)) {
+          var data = angular.toJson(customer);
+          $scope.page.loading = true;
+
+          CustomerListingSrvc.customerUpdate(customer.id, data)
+          .then(function (response){
+            var data = response.data;            
+
+            if (data.status == 'success') {
+              $scope.customers       = [];
+              $scope.message.status  = data.status;
               $scope.message.caption = data.message;
               
               $scope.selectedCustomer = {};  
@@ -129,35 +137,37 @@
                 }); 
               }, 800);
                
-            } else if (data.status == 'failed'){
-              $scope.message.status = data.status;
+            } else if (data.status == 'failed') {
+              $scope.message.status  = data.status;
               $scope.message.caption = data.message;
+              $scope.page.loading    = false;
             } 
           });
         } else {
-          $scope.message.status = "failed";
+          $scope.message.status  = "failed";
           $scope.message.caption = "No selected customer";
+          $scope.page.loading    = false;
         }              
       };
 
       $scope.submitDeleteCustomer = function(customerId){
-        $scope.customers    = [];
-        $scope.page.loading = true;
-        $scope.message.status = 'default';        
+        $scope.customers       = [];
+        $scope.page.loading    = true;
+        $scope.message.status  = 'default';        
         $scope.message.caption = 'Waiting for response...';
         
-        if(customerId) {
+        if (customerId) {
           CustomerListingSrvc.customerDelete(customerId)
           .then(function (response){
             var data = response.data;
 
             if(data.status == 'success') {
-              $scope.message.status = data.status;
+              $scope.message.status  = data.status;
               $scope.message.caption = data.message;
 
               $scope.getCustomers();
             } else if (data.status == 'failed'){
-              $scope.message.status = data.status;
+              $scope.message.status  = data.status;
               $scope.message.caption = data.message;
             } 
           });
