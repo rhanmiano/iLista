@@ -1,6 +1,8 @@
 # iLista - A Basic AngularJS-Slim CRUD App
 iLista is a basic Customer Listing App where user can add, update, delete, and retrieve customers. Built with [Slim framework](https://www.slimframework.com/) for serving API routes and [AngularJS](https://angularjs.org/) for the frontend and handling backend calls.
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/73692514-824d-4cab-91d5-47be23a95031/deploy-status)](https://app.netlify.com/sites/rhanmiano-ilista/deploys)
+
 See vue-ilista(VueJS counterpart) [here](https://github.com/rhanmiano/vue-ilista)
 
 ## Objectives
