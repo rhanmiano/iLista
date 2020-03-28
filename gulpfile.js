@@ -1,53 +1,66 @@
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var browserSync = require('browser-sync').create();
+const { parallel, series, watch, src, dest } = require('gulp');
+const $ = require('gulp-load-plugins')();
+const cssnano = require('cssnano');
+const autoprefixer = require('autoprefixer');
+const browserSync = require('browser-sync').create();
 
-gulp.task('css', function() {
-  return gulp.src('app/sass/main.scss')
-    .pipe($.sourcemaps.init())
-    .pipe($.sass.sync({
-        outputStyle: 'expanded'
-    }).on('error', $.sass.logError))
-    .pipe(gulp.dest('app/css'))
-    .pipe($.rename({
-        suffix: '.min'
-    }))
-    .pipe($.autoprefixer({
-        browsers: ['last 3 versions',
-            'not ie <= 8',
-            'firefox > 20'
-        ],
-        cascade: false
-    }))
-    .pipe($.sass.sync({
-        outputStyle: 'compressed'
-    }).on('error', $.sass.logError))
-    .pipe($.sourcemaps.write('.'))
-    .pipe(browserSync.reload({
-      stream: true
-    }))
-    .pipe(gulp.dest('app/css'));
-});
+function css() {
+    return src('app/sass/main.scss')
+        .pipe($.sourcemaps.init())
+        .pipe($.sass.sync({
+            outputStyle: 'expanded'
+        }).on('error', $.sass.logError))
+        .pipe(dest('app/css'))
+        .pipe($.rename({
+            suffix: '.min'
+        }))
+        .pipe($.postcss([autoprefixer({
+            cascade: false
+        })]))
+        .pipe($.sass.sync({
+            outputStyle: 'compressed'
+        }).on('error', $.sass.logError))
+        .pipe($.sourcemaps.write('.'))
+        .pipe(dest('app/css'))
 
-gulp.task('js', function() {
-  gulp.src('app/js/main.js')
+}
+
+// Concat js files (unused yet)
+function js() {
+    return src('assets/js/**/*.js')
     .pipe($.concat('main.js'))
-    .pipe(gulp.dest('app/dist/js'));
-});
+    .pipe(dest('app/js'))
+}
 
-gulp.task('reload', function(){
-  browserSync.reload();
-});
+// Put everythin in a dist folder
+function copy() {
+  return src('app/**/*', {base: './app'})
+  .pipe(dest("dist"))
+}
 
-gulp.task('serve', function() {
-  browserSync.init({
-    proxy: 'ilista:5001', //proxy this url
-    port: 5000
-  });  
-});
+function reload(done) {
+    browserSync.reload();
 
-gulp.task('dev', ['css', 'serve'], function(){
-  gulp.watch('app/**/*.scss', ['css', 'reload']);
-  gulp.watch('app/**/*.js', ['reload']);
-  gulp.watch('./**/*.php', ['reload']);
-});
+    done();
+}
+
+function serve() {
+    browserSync.init({
+        port: 5000,
+        proxy: 'http://localhost/mta/auth/authentication'
+    });
+}
+
+function watchFiles() {
+    watch('assets/scss/**/*.scss', css);
+}
+
+const dev = parallel(watchFiles, css);
+const build = series(css, js, copy);
+
+exports.css = css;
+exports.js = js;
+exports.copy = copy;
+exports.serve = serve;
+exports.dev = dev;
+exports.build = build;

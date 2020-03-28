@@ -182,7 +182,7 @@
         'customersAllGet': function(){
           return $http({
             method: 'GET',
-            url: '/api/customers',            
+            url: 'https://rhanmiano.me/slim-customer-listing/api/customers',            
             headers: {
               'Content-Type': 'application/json'
             }
@@ -191,7 +191,7 @@
         'customerAdd': function(data){
           return $http({
             method: 'POST',
-            url: '/api/add/customer',
+            url: 'https://rhanmiano.me/slim-customer-listing/api/add/customer',
             data: data,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -201,7 +201,7 @@
         'customerUpdate': function(id, data){
           return $http({
             method: 'POST',
-            url: '/api/update/customer/' + id,
+            url: 'https://rhanmiano.me/slim-customer-listing/api/update/customer/' + id,
             data: data,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -211,8 +211,7 @@
         'customerDelete': function(id){
           return $http({
             method: 'POST',
-            // url: 'https://www.rhanmiano.com/api/slim-customer-listing/delete/customer/' + id,
-            url: '/api/delete/customer/' + id,            
+            url: 'https://rhanmiano.me/slim-customer-listing/api/delete/customer/' + id,            
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
             }

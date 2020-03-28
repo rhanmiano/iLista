@@ -4,4 +4,5 @@ vendor/
 bower_components/
 app/sass/bootstrap
 app/css
+dist/
 *.css.map
