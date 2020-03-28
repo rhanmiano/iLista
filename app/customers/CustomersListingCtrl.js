@@ -29,7 +29,7 @@
           angular.forEach(customers, function(value, key){
             $scope.customers.push(value);
           });
-          $scope.page.loading = $scope.customers.length === 0 ? true : false;         
+          $scope.page.loading = false;
         });
       };      
 
@@ -174,10 +174,6 @@
         }
       };
 
-      $scope.checkValue = function(args){
-        console.log(args);
-      };
-
       $scope.getCustomers();
     }]);   
 
@@ -186,8 +182,7 @@
         'customersAllGet': function(){
           return $http({
             method: 'GET',
-            url: 'https://www.rhanmiano.com/api/ilista/customers',
-            // url: '/api/customers',            
+            url: '/api/customers',            
             headers: {
               'Content-Type': 'application/json'
             }
@@ -196,8 +191,7 @@
         'customerAdd': function(data){
           return $http({
             method: 'POST',
-            url: 'https://www.rhanmiano.com/api/ilista/add/customer',
-            // url: '/api/add/customer',
+            url: '/api/add/customer',
             data: data,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -207,8 +201,7 @@
         'customerUpdate': function(id, data){
           return $http({
             method: 'POST',
-            url: 'https://www.rhanmiano.com/api/ilista/update/customer/' + id,
-            // url: '/api/update/customer/' + id,
+            url: '/api/update/customer/' + id,
             data: data,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -218,8 +211,8 @@
         'customerDelete': function(id){
           return $http({
             method: 'POST',
-            url: 'https://www.rhanmiano.com/api/ilista/delete/customer/' + id,
-            // url: '/api/delete/customer/' + id,            
+            // url: 'https://www.rhanmiano.com/api/slim-customer-listing/delete/customer/' + id,
+            url: '/api/delete/customer/' + id,            
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
             }
