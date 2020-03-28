@@ -1,6 +1,7 @@
 <?php
-require_once '/../connection.php';
-require '/../includes/global.php';
+$path = dirname(dirname(__FILE__));
+require_once $path . '/connection.php';
+require $path . '/includes/global.php';
 
 class Customers extends Model {
   
@@ -91,7 +92,7 @@ class CustomersModel extends Model{
     $columns = array_keys($customer_data[0]);
     $updated_columns = [];
     foreach($columns as $column){
-      if($customer->$column != $args->$column) {        
+      if($customer->$column != $args->$column) {
         $customer->$column = $args->$column;
         array_push($updated_columns, $column);
       }      
