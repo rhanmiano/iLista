@@ -216,7 +216,7 @@
           customerDelete: function (id) {
             return $http({
               method: 'POST',
-              url: apiUrl + '/api/delete/customer/' + id,
+              url: $apiUrl + '/api/delete/customer/' + id,
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
               },
